@@ -7,15 +7,15 @@ spark = SparkSession.builder.appName("TotalSpentByCustomer").master("local[*]").
 # Create schema when reading customer-orders
 customerOrderSchema = StructType([
     StructField("cust_id", IntegerType(), True),
-                                  StructField("item_id", IntegerType(), True),
-                                  StructField("amount_spent", FloatType(), True)
-                                  ])
+    StructField("item_id", IntegerType(), True),
+    StructField("amount_spent", FloatType(), True)
+])
 
 # Load up the data into spark dataset
 customersDF = spark.read.schema(customerOrderSchema).csv("../data_sources/customer-orders.csv")
 
 totalByCustomer = customersDF.groupBy("cust_id").agg(func.round(func.sum("amount_spent"), 2) \
-                                      .alias("total_spent"))
+                                                     .alias("total_spent"))
 
 totalByCustomerSorted = totalByCustomer.sort("total_spent")
 
