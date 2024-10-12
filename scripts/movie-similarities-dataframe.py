@@ -100,7 +100,7 @@ if len(sys.argv) > 1:
     for result in results:
         # Display the similarity result that isn't the movie we're looking at
         similarMovieID = result.movie1
-        if (similarMovieID == movieID):
+        if similarMovieID == movieID:
             similarMovieID = result.movie2
 
         print(getMovieName(movieNames, similarMovieID) + "\tscore: " \
